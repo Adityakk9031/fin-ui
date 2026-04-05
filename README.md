@@ -80,4 +80,4 @@ The dashboard simulates a split-permission environment:
 - **Accessibility**: High-contrast ratios and clear labels ensure readability across the analytics panels.
 
 ---
-*Developed for evaluation purposes by Antigravity.*
+
