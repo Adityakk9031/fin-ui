@@ -78,7 +78,7 @@ const AddEditTransaction = ({ isOpen, onClose, editData }) => {
               <input 
                 type="text" 
                 placeholder="Where did you spend?" 
-                className="w-full bg-bg-dark border border-border rounded-xl px-4 py-3 focus:border-primary transition-all text-sm h-12"
+                className="w-full bg-[#0a0a0b] border border-white/10 rounded-xl px-4 py-3 focus:border-primary transition-all text-sm text-text-main placeholder:text-zinc-600 outline-none h-12"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               />
@@ -91,7 +91,7 @@ const AddEditTransaction = ({ isOpen, onClose, editData }) => {
                   type="number" 
                   step="0.01"
                   placeholder="0.00" 
-                  className="w-full bg-bg-dark border border-border rounded-xl px-4 py-3 focus:border-primary transition-all text-sm h-12"
+                  className="w-full bg-[#0a0a0b] border border-white/10 rounded-xl px-4 py-3 focus:border-primary transition-all text-sm text-text-main placeholder:text-zinc-600 outline-none h-12"
                   value={formData.amount}
                   onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                 />
@@ -100,7 +100,7 @@ const AddEditTransaction = ({ isOpen, onClose, editData }) => {
                 <label className="text-[10px] text-text-dim uppercase font-bold tracking-widest leading-none mb-1.5 block">Date</label>
                 <input 
                   type="date" 
-                  className="w-full bg-bg-dark border border-border rounded-xl px-4 py-3 focus:border-primary transition-all text-sm h-12"
+                  className="w-full bg-[#0a0a0b] border border-white/10 rounded-xl px-4 py-3 focus:border-primary transition-all text-sm text-text-main placeholder:text-zinc-600 outline-none h-12 [color-scheme:dark]"
                   value={formData.date}
                   onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                 />
@@ -111,28 +111,28 @@ const AddEditTransaction = ({ isOpen, onClose, editData }) => {
               <div>
                 <label className="text-[10px] text-text-dim uppercase font-bold tracking-widest leading-none mb-1.5 block">Category</label>
                 <select 
-                  className="w-full bg-bg-dark border border-border rounded-xl px-4 py-3 focus:border-primary transition-all text-sm h-12"
+                  className="w-full bg-[#0a0a0b] border border-white/10 rounded-xl px-4 py-3 focus:border-primary transition-all text-sm text-text-main outline-none h-12"
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                 >
                   {CATEGORIES.map(cat => (
-                    <option key={cat.id} value={cat.id}>{cat.name}</option>
+                    <option key={cat.id} value={cat.id} className="bg-[#0a0a0b] text-text-main">{cat.name}</option>
                   ))}
                 </select>
               </div>
               <div>
                 <label className="text-[10px] text-text-dim uppercase font-bold tracking-widest leading-none mb-1.5 block">Type</label>
                 <select 
-                  className="w-full bg-bg-dark border border-border rounded-xl px-4 py-3 focus:border-primary transition-all text-sm h-12"
+                  className="w-full bg-[#0a0a0b] border border-white/10 rounded-xl px-4 py-3 focus:border-primary transition-all text-sm text-text-main outline-none h-12"
                   value={formData.type}
                   onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                 >
-                  <option value="expense">Expense</option>
-                  <option value="income">Income</option>
+                  <option value="expense" className="bg-[#0a0a0b] text-text-main">Expense</option>
+                  <option value="income" className="bg-[#0a0a0b] text-text-main">Income</option>
                 </select>
               </div>
             </div>
-          </div>
+     </div>
 
           <div className="flex gap-4 pt-4 border-t border-border">
             <button 
