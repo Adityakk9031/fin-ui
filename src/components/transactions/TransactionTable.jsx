@@ -22,28 +22,42 @@ const TransactionTable = ({ onEdit }) => {
   const [sortConfig, setSortConfig] = useState({ key: 'date', direction: 'desc' });
   const itemsPerPage = 8;
 
-  // Filtering
+  // Reset to page 1 whenever filters change to avoid being on a non-existent page
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [filters]);
+
+  // Filtering with defensive checks
   const filteredTransactions = transactions.filter(t => {
-    const matchesSearch = t.description.toLowerCase().includes(filters.transactionSearch.toLowerCase());
+    const searchStr = filters.transactionSearch?.toLowerCase() || '';
+    const description = t.description?.toLowerCase() || '';
+    const matchesSearch = description.includes(searchStr);
     const matchesCategory = filters.category === 'all' || t.category === filters.category;
     const matchesType = filters.type === 'all' || t.type === filters.type;
     return matchesSearch && matchesCategory && matchesType;
   });
 
-  // Sorting
+  // Sorting with defensive checks
   const sortedTransactions = [...filteredTransactions].sort((a, b) => {
-    if (sortConfig.key === 'amount') {
-      return sortConfig.direction === 'asc' ? a.amount - b.amount : b.amount - a.amount;
+    const { key, direction } = sortConfig;
+    
+    if (key === 'amount') {
+      const amtA = Number(a.amount) || 0;
+      const amtB = Number(b.amount) || 0;
+      return direction === 'asc' ? amtA - amtB : amtB - amtA;
     }
-    if (sortConfig.key === 'date') {
-      return sortConfig.direction === 'asc' 
-        ? new Date(a.date) - new Date(b.date) 
-        : new Date(b.date) - new Date(a.date);
+    
+    if (key === 'date') {
+      const dateA = a.date ? new Date(a.date).getTime() : 0;
+      const dateB = b.date ? new Date(b.date).getTime() : 0;
+      return direction === 'asc' ? dateA - dateB : dateB - dateA;
     }
-    const valA = a[sortConfig.key].toString().toLowerCase();
-    const valB = b[sortConfig.key].toString().toLowerCase();
-    if (valA < valB) return sortConfig.direction === 'asc' ? -1 : 1;
-    if (valA > valB) return sortConfig.direction === 'asc' ? 1 : -1;
+
+    const valA = String(a[key] || '').toLowerCase();
+    const valB = String(b[key] || '').toLowerCase();
+    
+    if (valA < valB) return direction === 'asc' ? -1 : 1;
+    if (valA > valB) return direction === 'asc' ? 1 : -1;
     return 0;
   });
 
@@ -70,6 +84,16 @@ const TransactionTable = ({ onEdit }) => {
 
   const getCategoryColor = (catId) => {
     return CATEGORIES.find(c => c.id === catId)?.color || 'var(--text-dim)';
+  };
+
+  const safeFormatDate = (dateStr, formatStr) => {
+    try {
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) return 'Invalid Date';
+      return format(date, formatStr);
+    } catch {
+      return 'Invalid Date';
+    }
   };
 
   return (
@@ -99,8 +123,8 @@ const TransactionTable = ({ onEdit }) => {
                 <tr key={t.id} className="hover:bg-bg-card-hover transition-colors group">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex flex-col">
-                      <span className="text-sm font-semibold text-text-main">{format(new Date(t.date), 'MMM dd, yyyy')}</span>
-                      <span className="text-[10px] font-bold text-text-dim uppercase tracking-wider">{format(new Date(t.date), 'HH:mm')}</span>
+                      <span className="text-sm font-semibold text-text-main">{safeFormatDate(t.date, 'MMM dd, yyyy')}</span>
+                      <span className="text-[10px] font-bold text-text-dim uppercase tracking-wider">{safeFormatDate(t.date, 'HH:mm')}</span>
                     </div>
                   </td>
                   <td className="px-6 py-4">

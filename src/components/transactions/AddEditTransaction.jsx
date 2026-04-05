@@ -24,8 +24,11 @@ const AddEditTransaction = ({ isOpen, onClose, editData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.description || !formData.amount || !formData.date) {
-      setError('Please fill in all required fields.');
+    const description = formData.description?.trim();
+    const amount = parseFloat(formData.amount);
+    
+    if (!description || isNaN(amount) || amount <= 0 || !formData.date) {
+      setError('Please provide a valid description, date, and positive amount.');
       return;
     }
 
