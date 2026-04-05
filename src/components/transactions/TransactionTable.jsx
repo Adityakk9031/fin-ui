@@ -114,7 +114,7 @@ const TransactionTable = ({ onEdit }) => {
               <th className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-text-dim cursor-pointer hover:text-primary transition-colors text-right" onClick={() => handleSort('amount')}>
                 <div className="flex items-center justify-end gap-2">Amount <ArrowUpDown className="w-3 h-3" /></div>
               </th>
-              <th className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-text-dim text-right">Actions</th>
+              {role === 'admin' && <th className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-text-dim text-right">Actions</th>}
             </tr>
           </thead>
           <tbody className="divide-y divide-border/50">
@@ -146,27 +146,29 @@ const TransactionTable = ({ onEdit }) => {
                       {t.type === 'income' ? '+' : '-'}${t.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right">
-                    <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button 
-                        onClick={() => onEdit(t)}
-                        className="p-1.5 rounded-lg hover:bg-primary/20 text-text-muted hover:text-primary transition-all"
-                      >
-                        <Edit2 className="w-4 h-4" />
-                      </button>
-                      <button 
-                        onClick={() => handleDelete(t.id)}
-                        className="p-1.5 rounded-lg hover:bg-danger/20 text-text-muted hover:text-danger transition-all"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </td>
+                  {role === 'admin' && (
+                    <td className="px-6 py-4 whitespace-nowrap text-right">
+                      <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button 
+                          onClick={() => onEdit(t)}
+                          className="p-1.5 rounded-lg hover:bg-primary/20 text-text-muted hover:text-primary transition-all"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button 
+                          onClick={() => handleDelete(t.id)}
+                          className="p-1.5 rounded-lg hover:bg-danger/20 text-text-muted hover:text-danger transition-all"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  )}
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="px-6 py-12 text-center text-text-dim italic">
+                <td colSpan={role === 'admin' ? 5 : 4} className="px-6 py-12 text-center text-text-dim italic">
                   No transactions found matching your filters.
                 </td>
               </tr>

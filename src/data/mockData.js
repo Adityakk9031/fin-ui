@@ -25,9 +25,16 @@ const generateMockTransactions = () => {
   const transactions = [];
   const today = new Date();
   
+  // Deterministic "Random" based on a simple sine-wave multiplier
+  const getPseudoRandom = (seed) => {
+    const x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  };
+
   // Generate data for the last 180 days
   for (let i = 0; i < 180; i++) {
     const date = subDays(today, i);
+    const daySeed = i + 1;
     
     // Add salary on the 1st of each month
     if (date.getDate() === 1) {
@@ -41,21 +48,23 @@ const generateMockTransactions = () => {
       });
     }
 
-    // Add some random expenses
-    const numExpenses = Math.floor(Math.random() * 3); // 0-2 expenses per day
+    // Add deterministic expenses
+    const numExpenses = Math.floor(getPseudoRandom(daySeed * 77) * 3); // 0-2 expenses
     for (let j = 0; j < numExpenses; j++) {
-      const categoryId = CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)].id;
+      const expSeed = daySeed * 100 + j;
+      const categoryId = CATEGORIES[Math.floor(getPseudoRandom(expSeed * 5) * CATEGORIES.length)].id;
       const descriptions = MOCK_DESCRIPTIONS[categoryId];
-      const description = descriptions[Math.floor(Math.random() * descriptions.length)];
+      const description = descriptions[Math.floor(getPseudoRandom(expSeed * 3) * descriptions.length)];
       
       let amount = 0;
-      if (categoryId === 'housing') amount = 1200 + Math.random() * 500;
-      else if (categoryId === 'food') amount = 15 + Math.random() * 80;
-      else if (categoryId === 'transport') amount = 10 + Math.random() * 60;
-      else if (categoryId === 'shopping') amount = 20 + Math.random() * 300;
-      else if (categoryId === 'entertainment') amount = 10 + Math.random() * 50;
-      else if (categoryId === 'utilities') amount = 40 + Math.random() * 100;
-      else if (categoryId === 'health') amount = 30 + Math.random() * 150;
+      const randAmt = getPseudoRandom(expSeed * 11);
+      if (categoryId === 'housing') amount = 1200 + randAmt * 500;
+      else if (categoryId === 'food') amount = 15 + randAmt * 80;
+      else if (categoryId === 'transport') amount = 10 + randAmt * 60;
+      else if (categoryId === 'shopping') amount = 20 + randAmt * 300;
+      else if (categoryId === 'entertainment') amount = 10 + randAmt * 50;
+      else if (categoryId === 'utilities') amount = 40 + randAmt * 100;
+      else if (categoryId === 'health') amount = 30 + randAmt * 150;
 
       transactions.push({
         id: `exp-${i}-${j}`,
