@@ -58,8 +58,8 @@ const Transactions = () => {
   };
 
   return (
-    <div className="animate-fade-in space-y-6 pb-12">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="animate-fade-in space-y-6 pb-12 w-full max-w-full overflow-x-hidden">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 flex-wrap w-full">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2 text-text-dim text-xs font-bold uppercase tracking-widest mb-1">
             <span>Finance</span>

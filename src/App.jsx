@@ -11,12 +11,15 @@ function App() {
   return (
     <AppProvider>
       <Router>
-        <div className="flex min-h-screen bg-bg-dark overflow-x-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] min-h-screen bg-bg-dark overflow-x-hidden">
+          {/* Sidebar - Handles its own width and responsive states */}
           <Sidebar />
-          <div className="flex-1 flex flex-col min-h-screen w-full relative">
+
+          {/* Main Content Wrapper - Grid ensures this fills exactly the remaining viewport space */}
+          <div className="min-h-screen flex flex-col min-w-0">
             <Header />
-            <main className="flex-1 p-4 md:p-8">
-              <div className="max-w-7xl mx-auto">
+            <main className="flex-1 p-4 md:p-8 overflow-y-auto">
+              <div className="max-w-[1400px] mx-auto w-full">
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/transactions" element={<Transactions />} />

@@ -11,8 +11,8 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full h-20 glass border-b border-border px-4 md:px-8 flex items-center justify-between gap-4">
-      <div className="flex items-center gap-4 flex-1">
+    <header className="sticky top-0 z-40 h-20 w-full glass border-b border-border px-4 md:px-8 flex items-center justify-between gap-4">
+      <div className="flex-1 flex items-center gap-4">
         {/* Mobile Menu Toggle */}
         <button 
           onClick={() => dispatch({ type: 'TOGGLE_SIDEBAR' })}
