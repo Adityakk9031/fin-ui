@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, User, Bell, LayoutGrid, ChevronDown } from 'lucide-react';
+import { Search, User, Bell, LayoutGrid, ChevronDown, Menu } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
 const Header = () => {
@@ -11,10 +11,18 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full h-20 glass border-b border-border px-8 flex items-center justify-between">
-      <div className="flex-1 flex items-center gap-4">
+    <header className="sticky top-0 z-40 w-full h-20 glass border-b border-border px-4 md:px-8 flex items-center justify-between gap-4">
+      <div className="flex items-center gap-4 flex-1">
+        {/* Mobile Menu Toggle */}
+        <button 
+          onClick={() => dispatch({ type: 'TOGGLE_SIDEBAR' })}
+          className="md:hidden p-2 rounded-xl bg-bg-card border border-border hover:bg-primary hover:text-white transition-all shadow-sm"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+
         {/* Search Bar */}
-        <div className="relative group w-full max-w-md">
+        <div className="relative group w-full max-w-md hidden sm:block">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 group-focus-within:text-violet-500 transition-all z-10" />
           <input 
             type="text" 
