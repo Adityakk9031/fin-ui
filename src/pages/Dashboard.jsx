@@ -6,7 +6,27 @@ import { useApp } from '../context/AppContext';
 
 const Dashboard = () => {
   const { state } = useApp();
-  const { role } = state;
+  const { role, isLoading } = state;
+
+  if (isLoading) {
+    return (
+      <div className="animate-fade-in space-y-8 pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-32 rounded-3xl bg-bg-card/40 border border-border animate-pulse"></div>
+          ))}
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 h-80 rounded-3xl bg-bg-card/40 border border-border animate-pulse"></div>
+          <div className="lg:col-span-1 h-80 rounded-3xl bg-bg-card/40 border border-border animate-pulse"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="h-64 rounded-3xl bg-bg-card/40 border border-border animate-pulse"></div>
+          <div className="h-64 rounded-3xl bg-bg-card/40 border border-border animate-pulse"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="animate-fade-in space-y-8 pb-12">

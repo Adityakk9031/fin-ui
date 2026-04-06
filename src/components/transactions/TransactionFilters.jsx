@@ -47,6 +47,21 @@ const TransactionFilters = () => {
           <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
         </div>
 
+        {/* Date Range Filter */}
+        <div className="relative min-w-[160px]">
+          <select 
+            className="w-full pl-4 pr-10 py-2.5 bg-zinc-900/80 border-white/10 border rounded-xl appearance-none focus:border-violet-500/50 transition-all text-sm cursor-pointer text-white outline-none"
+            value={filters.dateRange}
+            onChange={(e) => handleFilterChange('dateRange', e.target.value)}
+          >
+            <option value="all">All Time</option>
+            <option value="this-month" className="bg-zinc-900">This Month</option>
+            <option value="last-30-days" className="bg-zinc-900">Last 30 Days</option>
+            <option value="this-year" className="bg-zinc-900">This Year</option>
+          </select>
+          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
+        </div>
+
         {/* Type Filter */}
         <div className="relative min-w-[140px]">
           <select 

@@ -5,6 +5,14 @@ import { initialState, appReducer } from './stateReducer';
 function AppProvider({ children }) {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
+  // Simulate initial "Mock API" fetch
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      dispatch({ type: 'SET_LOADING', payload: false });
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
   // Sync with localStorage if external changes happen
   useEffect(() => {
     const handleStorageChange = () => {

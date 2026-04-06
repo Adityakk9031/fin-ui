@@ -11,10 +11,14 @@ export const initialState = {
     dateRange: 'all',
   },
   isSidebarOpen: true,
+  isLoading: true,
 };
 
 export function appReducer(state, action) {
   switch (action.type) {
+    case 'SET_LOADING': {
+      return { ...state, isLoading: action.payload };
+    }
     case 'ADD_TRANSACTION': {
       const newTransactions = [action.payload, ...state.transactions];
       localStorage.setItem('transactions', JSON.stringify(newTransactions));

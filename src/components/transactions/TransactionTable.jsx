@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { CATEGORIES } from '../../data/mockData';
-import { format } from 'date-fns';
+import { format, isSameMonth, isAfter, subDays, startOfYear } from 'date-fns';
 
 const TransactionTable = ({ onEdit }) => {
   const { state, dispatch } = useApp();
@@ -34,7 +34,21 @@ const TransactionTable = ({ onEdit }) => {
     const matchesSearch = description.includes(searchStr);
     const matchesCategory = filters.category === 'all' || t.category === filters.category;
     const matchesType = filters.type === 'all' || t.type === filters.type;
-    return matchesSearch && matchesCategory && matchesType;
+    
+    // Advanced Date Filtering
+    let matchesDate = true;
+    const tDate = new Date(t.date);
+    const now = new Date();
+
+    if (filters.dateRange === 'this-month') {
+      matchesDate = isSameMonth(tDate, now);
+    } else if (filters.dateRange === 'last-30-days') {
+      matchesDate = isAfter(tDate, subDays(now, 30));
+    } else if (filters.dateRange === 'this-year') {
+      matchesDate = isAfter(tDate, startOfYear(now));
+    }
+
+    return matchesSearch && matchesCategory && matchesType && matchesDate;
   });
 
   // Sorting with defensive checks

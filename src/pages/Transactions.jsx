@@ -7,9 +7,22 @@ import { useApp } from '../context/AppContext';
 
 const Transactions = () => {
   const { state } = useApp();
-  const { role, transactions } = state;
+  const { role, transactions, isLoading } = state;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);
+
+  if (isLoading) {
+    return (
+      <div className="animate-fade-in space-y-6 pb-12">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="h-16 w-64 bg-bg-card/40 rounded-xl animate-pulse"></div>
+          <div className="h-12 w-48 bg-bg-card/40 rounded-xl animate-pulse"></div>
+        </div>
+        <div className="h-16 w-full bg-bg-card/40 rounded-xl animate-pulse"></div>
+        <div className="h-96 w-full bg-bg-card/40 rounded-2xl animate-pulse"></div>
+      </div>
+    );
+  }
 
   const handleEdit = (transaction) => {
     setEditData(transaction);
